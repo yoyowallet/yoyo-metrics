@@ -14,8 +14,12 @@ def _prepare_tags(instance: Optional[str], tags: Optional[List[str]]) -> List[st
 
 
 class DatadogMetricsBackend(BaseMetricsBackend):
-    def __init__(self, **kwargs):
-        self.stats = DogStatsd(**kwargs)
+    def __init__(self, host: str, port:int, namespace:str):
+        self.stats = DogStatsd(
+            host=host,
+            port=port,
+            namespace=namespace,
+        )
 
     def _gauge(self, metric, value, instance=None, tags=None, sample_rate=1):
         self.stats.gauge(
